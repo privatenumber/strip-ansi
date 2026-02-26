@@ -1,0 +1,153 @@
+String sizes:
+  colored1k:  1000 chars
+  colored10k: 10000 chars
+  colored100k: 100000 chars
+  colored1M:  1000000 chars
+  colored5M:  5000000 chars
+  ansiEnd5M:  5000010 chars
+
+clk: ~2.27 GHz
+cpu: Apple M2 Max
+runtime: node 25.2.1 (arm64-darwin)
+
+benchmark                   avg (min … max) p75 / p99    (min … top 1%)
+------------------------------------------- -------------------------------
+colored log 1 KB               1.54 µs/iter   1.68 µs █                    
+                        (1.26 µs … 3.27 µs)   2.99 µs ██                   
+                    (  3.33 kb …   3.56 kb)   3.55 kb ███▃▃▅▄▃▄▂▂▁▂▁▃▂▁▁▁▁▂
+
+colored log 10 KB             17.69 µs/iter  16.84 µs ███                  
+                      (13.06 µs … 32.47 µs)  28.19 µs ███▅▅▅   ▅          ▅
+                    (  4.33 kb …   4.33 kb)   4.33 kb ██████▁▁▁█▁▁▁▁▁▁▁▁▁▁█
+
+colored log 100 KB           879.53 µs/iter 284.79 µs █                    
+                     (123.08 µs … 23.36 ms)  13.20 ms █                    
+                    (208.22 kb … 424.19 kb) 364.23 kb █▃▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+colored log 1 MB               5.98 ms/iter   5.24 ms █                    
+                       (1.25 ms … 75.76 ms)  43.02 ms █                    
+                    (  3.55 mb …   3.55 mb)   3.55 mb █▄▃▃▂▂▂▂▁▁▁▁▂▁▁▁▁▁▁▁▁
+
+colored log 5 MB              21.26 ms/iter  23.68 ms  ▂█ █                
+                       (8.46 ms … 49.55 ms)  46.45 ms  ██ █▅▅▅            ▅
+                    ( 17.76 mb …  17.76 mb)  17.76 mb ▇██▇████▇▇▁▇▁▇▁▇▁▁▁▁█
+
+                             ┌                                            ┐
+                             ┬
+            colored log 1 KB │
+                             ┴
+                             ┬
+           colored log 10 KB │
+                             ┴
+                             ┌┬           ╷
+          colored log 100 KB ││───────────┤
+                             └┴           ╵
+                              ┌────┬                                   ╷
+            colored log 1 MB  │    │───────────────────────────────────┤
+                              └────┴                                   ╵
+                                     ╷   ┌────────┬─┐                     ╷
+            colored log 5 MB         ├───┤        │ ├─────────────────────┤
+                                     ╵   └────────┴─┘                     ╵
+                             └                                            ┘
+                             1.26 µs           23.23 ms            46.45 ms
+
+summary
+  colored log 1 KB
+   11.49x faster than colored log 10 KB
+   571.35x faster than colored log 100 KB
+   3887.36x faster than colored log 1 MB
+   13812.51x faster than colored log 5 MB
+
+------------------------------------------- -------------------------------
+plain log 1 KB                80.03 ns/iter  37.21 ns █                    
+                       (36.08 ns … 4.62 µs) 862.54 ns █                    
+                    (  0.09  b … 135.11  b)   0.48  b █▃▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+plain log 10 KB              911.87 ns/iter 542.00 ns    █                 
+                      (416.00 ns … 9.02 ms)   1.08 µs    █                 
+                    (384.00  b … 170.89 kb) 393.94  b ▁▃▁█▄▄▂▁▁▁▁▁▁▁▁▁▂▁▃▁▁
+
+plain log 100 KB               6.63 µs/iter   7.99 µs █       ██           
+                       (3.18 µs … 12.25 µs)  11.93 µs ██   █  ██           
+                    (  0.09  b …   3.53  b)   0.28  b ███▁▁█▁███▁███▁▁▁▁█▁█
+
+plain log 1 MB                71.91 µs/iter  79.53 µs █     █              
+                     (52.76 µs … 107.30 µs)  94.21 µs █ ▅  ▅█▅▅    ▅   ▅  ▅
+                    (  0.11  b …   0.42  b)   0.13  b █▁█▁▁████▁▁▁▁█▁▁▁█▁▁█
+
+plain log 5 MB               342.51 µs/iter 292.00 µs █                    
+                      (227.04 µs … 3.86 ms)   2.23 ms █                    
+                    (432.00  b … 352.42 kb) 818.13  b █▃▂▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+                             ┌                                            ┐
+                             ┬
+              plain log 1 KB │
+                             ┴
+                             ┬
+             plain log 10 KB │
+                             ┴
+                             ┬
+            plain log 100 KB │
+                             ┴
+                              ┬┐
+              plain log 1 MB  ││
+                              ┴┘
+                                  ┌─┬                                     ╷
+              plain log 5 MB      │ │─────────────────────────────────────┤
+                                  └─┴                                     ╵
+                             └                                            ┘
+                             36.08 ns            1.11 ms            2.23 ms
+
+summary
+  plain log 1 KB
+   11.39x faster than plain log 10 KB
+   82.89x faster than plain log 100 KB
+   898.53x faster than plain log 1 MB
+   4279.56x faster than plain log 5 MB
+
+------------------------------------------- -------------------------------
+ansi-at-end 1 KB             573.70 ns/iter 622.64 ns █                    
+                      (425.73 ns … 2.10 µs)   1.62 µs █                    
+                    ( 64.09  b … 361.11  b)  65.16  b █▇▅▄▄▃▃▃▃▂▁▁▁▁▁▁▁▁▁▁▁
+
+ansi-at-end 10 KB              6.57 µs/iter   6.92 µs      █             █ 
+                       (4.22 µs … 15.55 µs)   7.99 µs ▅ ▅▅▅█  ▅▅▅▅▅ ▅    █▅
+                    ( 50.58  b …  67.36  b)  63.55  b █▁████▁▁█████▁█▁▁▁▁██
+
+ansi-at-end 100 KB            56.26 µs/iter  60.13 µs  █       █           
+                      (42.21 µs … 83.02 µs)  81.22 µs ▅█ ▅▅▅▅ ▅█          ▅
+                    ( 64.11  b …  64.58  b)  64.17  b ██▁████▁██▁▁▁▁▁▁▁▁▁▁█
+
+ansi-at-end 1 MB               1.49 ms/iter   1.07 ms █                    
+                     (367.88 µs … 40.44 ms)  15.21 ms █                    
+                    (496.00  b … 560.00  b) 496.34  b ██▃▂▂▂▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁
+
+ansi-at-end 5 MB               2.49 ms/iter   2.70 ms █                    
+                        (1.86 ms … 9.29 ms)   6.12 ms █                    
+                    (496.00  b … 560.00  b) 496.40  b ██▇▅▄▄▃▃▂▂▂▂▁▂▁▁▁▁▁▁▁
+
+                             ┌                                            ┐
+                             ┬
+            ansi-at-end 1 KB │
+                             ┴
+                             ┬
+           ansi-at-end 10 KB │
+                             ┴
+                             ┬
+          ansi-at-end 100 KB │
+                             ┴
+                              ┌──┬                                        ╷
+            ansi-at-end 1 MB  │  │────────────────────────────────────────┤
+                              └──┴                                        ╵
+                                  ╷┌┬┐         ╷
+            ansi-at-end 5 MB      ├┤│├─────────┤
+                                  ╵└┴┘         ╵
+                             └                                            ┘
+                             425.73 ns           7.61 ms           15.21 ms
+
+summary
+  ansi-at-end 1 KB
+   11.46x faster than ansi-at-end 10 KB
+   98.07x faster than ansi-at-end 100 KB
+   2595.33x faster than ansi-at-end 1 MB
+   4335.92x faster than ansi-at-end 5 MB
